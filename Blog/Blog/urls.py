@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from froala_editor import views
 
 from webapp.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
+    path('froala_editor/', include('froala_editor.urls')),
 ]
