@@ -3,7 +3,6 @@ import string
 
 from django.utils.text import slugify
 
-from webapp.models import Article
 
 
 def generate_random_string(N):
@@ -14,6 +13,7 @@ def generate_random_string(N):
 
 def generate_slug(text):
     new_slug = slugify(text)
+    from webapp.models import Article
     if Article.objects.filter(slug=new_slug).exists():
         generate_slug(text + generate_random_string(5))
     return new_slug
