@@ -4,7 +4,6 @@ import string
 from django.utils.text import slugify
 
 
-
 def generate_random_string(N):
     res = ''.join(random.choices(string.ascii_uppercase +
                                  string.digits, k=N))
