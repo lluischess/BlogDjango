@@ -20,14 +20,16 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from froala_editor import views
 
-from webapp.views import home, login
+from webapp.views import home, login, register
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('login.html', login, name='login'),
+    path('register.html', register, name='register'),
     path('froala_editor/', include('froala_editor.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 # hace que se puedan visualizar los enlaces a las imagenes
