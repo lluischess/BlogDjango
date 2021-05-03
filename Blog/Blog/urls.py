@@ -22,6 +22,7 @@ from froala_editor import views
 
 from webapp.views import home, login, register
 
+from webapp.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('register.html', register, name='register'),
     path('froala_editor/', include('froala_editor.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('webapp.urls_api')),
 ]
 
 # hace que se puedan visualizar los enlaces a las imagenes
