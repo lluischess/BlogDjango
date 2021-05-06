@@ -10,22 +10,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Price Slider Stylesheets -->
-    <link rel="stylesheet" href="/css/nouislider.css">
+    <link rel="stylesheet" href="/webapp/css/nouislider.css">
     <!-- Google fonts - Playfair Display-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700">
     <!-- Google fonts - Poppins-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
     <!-- swiper-->
-    <link rel="stylesheet" href="/css/swiper.min.css">
+    <link rel="stylesheet" href="/webapp/css/swiper.min.css">
     <!-- Magnigic Popup-->
-    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/webapp/css/magnific-popup.css">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="/css/default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/webapp/css/default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/webapp/css/custom.css">
+
 
 </head>
 <body style="padding-top: 72px;">
+<input type="hidden" id="csrf" value="{{csrf_token}}">
 <header class="header">
 
     <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
@@ -72,6 +74,6 @@
 </footer>
 
 </body>
-
+<script  type="text/javascript" src="/webapp/js/main.js"></script>
 
 </html>
