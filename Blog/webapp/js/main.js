@@ -13,15 +13,21 @@ function login(){
         'password' : password
     }
 
-    fetch('/api/login/' ,{
+    fetch('/api/login/' , {
         method : 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CRSFToken' : csrf,
+            'Content-Type' : 'application/json',
+            'X-CSRFToken' : csrf,
         },
         body : JSON.stringify(data)
     }).then(result => result.json())
     .then(response => {
-        console.log(response)
+
+       if(response.status == 200){
+            window.location.href = '/'
+       }
+       else{
+            alert(response.message)
+       }
     })
  }

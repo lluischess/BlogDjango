@@ -14,6 +14,10 @@ def login(request):
     return render(request, 'login.html')
 
 
+def addpost(request):
+    return render(request, 'addpost.html')
+
+
 def register(request):
     return render(request, 'register.html')
 
@@ -41,6 +45,7 @@ class LoginView(APIView):
             user_obj = authenticate(username=data.get('username'), password=data.get('password'))
 
             if user_obj:
+                login(request, user_obj)
                 response['status'] = 200
                 response['message'] = 'Welcome'
             else:
