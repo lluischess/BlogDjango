@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
+from webapp.form import BlogForm
+
 
 def home(request):
     return render(request, 'home.html')
@@ -15,7 +17,8 @@ def login(request):
 
 
 def addpost(request):
-    return render(request, 'addpost.html')
+    context = {'form': BlogForm}
+    return render(request, 'addpost.html', context)
 
 
 def register(request):
