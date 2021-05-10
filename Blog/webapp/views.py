@@ -1,15 +1,21 @@
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 from webapp.form import BlogForm
+from webapp.models import Article
 
 
 def home(request):
-    return render(request, 'home.html')
+    context = {'articulos': Article.objects.all()}
+    return render(request, 'home.html', context)
+
+
+def article_detail(request):
+    return render(request, 'article_detail.html')
 
 
 def login(request):
@@ -18,6 +24,26 @@ def login(request):
 
 def addpost(request):
     context = {'form': BlogForm}
+    try:
+        if request.method == 'POST':
+            form = BlogForm(request.POST)
+            image = request.FILES['image']
+            title = request.POST.get('title')
+            user = request.user
+
+            if form.is_valid():
+                content = form.cleaned_data['content']
+
+            blog_object = Article.objects.create(
+                user=user, title=title,
+                content=content, image=image
+            )
+            print(blog_object)
+            return redirect('/addpost/')
+
+    except Exception as error:
+        print(error)
+
     return render(request, 'addpost.html', context)
 
 
