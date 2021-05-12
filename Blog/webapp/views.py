@@ -10,7 +10,7 @@ from webapp.models import Article
 
 
 def home(request):
-    context = {'articulos': Article.objects.all()}
+    context = {'articles': Article.objects.all()}
     return render(request, 'home.html', context)
 
 
