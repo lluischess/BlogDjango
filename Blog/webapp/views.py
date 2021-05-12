@@ -14,8 +14,15 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-def article_detail(request):
-    return render(request, 'article_detail.html')
+def article_detail(request, slug):
+    context = {}
+    try:
+        article_object = Article.objects.filter(slug=slug).first()
+        context['article_object'] = article_object
+    except Exception as Error:
+        print(Error)
+
+    return render(request, 'post-details.html', context)
 
 
 def login(request):

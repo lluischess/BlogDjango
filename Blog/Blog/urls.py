@@ -34,7 +34,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('webapp.urls_api')),
     path('addpost/', addpost, name='addpost'),
-    path('article_detail/<slug>', article_detail, name='article_detail'),
+    path('post-details/<slug>', article_detail, name='post-details'),
 ]
 
 # hace que se puedan visualizar los enlaces a las imagenes
