@@ -25,6 +25,17 @@ def article_detail(request, slug):
     return render(request, 'post-details.html', context)
 
 
+def articlep_detail(request):
+    context = {}
+    try:
+        articlep_object = Article.objects.filter(user = request.user)
+        context['articlep_object'] = articlep_object
+    except Exception as Error:
+        print(Error)
+    print(context)
+    return render(request, 'detail.html', context)
+
+
 def login(request):
     return render(request, 'login.html')
 
