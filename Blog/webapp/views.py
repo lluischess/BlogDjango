@@ -47,7 +47,8 @@ def article_delete(request, id):
         print(Error)
     return redirect('/detail/')
 
-def article_update(request, slug):
+
+def post_update(request, slug):
     context = {}
 
     try:
@@ -57,7 +58,7 @@ def article_update(request, slug):
             return redirect('/')
 
         initial_dic = {'content': article_object.content}
-        form = Article(initial = initial_dic)
+        form = Article(initial=initial_dic)
 
         if request.method == 'POST':
             form = Article(request.POST)
@@ -70,16 +71,16 @@ def article_update(request, slug):
                 content = form.cleaned_data['content']
 
             article_object = Article.objects.create(
-                user = user, title = title,
-                content = content, image = image
+                user=user, title=title,
+                content=content, image=image
             )
 
         context['article_object'] = article_object
-        context['form'] =form
+        context['form'] = form
 
     except Exception as Error:
         print(Error)
-    return render(request, 'post-update.html', context)
+    return render(request, 'post_update.html', context)
 
 
 def login(request):
