@@ -28,12 +28,58 @@ def article_detail(request, slug):
 def articlep_detail(request):
     context = {}
     try:
-        articlep_object = Article.objects.filter(user = request.user)
+        articlep_object = Article.objects.filter(user=request.user)
         context['articlep_object'] = articlep_object
     except Exception as Error:
         print(Error)
     print(context)
     return render(request, 'detail.html', context)
+
+
+def article_delete(request, id):
+    try:
+        article_object = Article.objects.get(id=id)
+
+        if article_object.user == request.user:
+            article_object.delete()
+
+    except Exception as Error:
+        print(Error)
+    return redirect('/detail/')
+
+def article_update(request, slug):
+    context = {}
+
+    try:
+        article_object = Article.objects.get(slug=slug)
+
+        if article_object.user != request.user:
+            return redirect('/')
+
+        initial_dic = {'content': article_object.content}
+        form = Article(initial = initial_dic)
+
+        if request.method == 'POST':
+            form = Article(request.POST)
+            print(request.FILES)
+            image = request.FILES['image']
+            title = request.POST.get('title')
+            user = request.user
+
+            if form.is_valid():
+                content = form.cleaned_data['content']
+
+            article_object = Article.objects.create(
+                user = user, title = title,
+                content = content, image = image
+            )
+
+        context['article_object'] = article_object
+        context['form'] =form
+
+    except Exception as Error:
+        print(Error)
+    return render(request, 'post-update.html', context)
 
 
 def login(request):

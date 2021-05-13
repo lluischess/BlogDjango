@@ -26,3 +26,4 @@ class Article(models.Model):
 
     def get_slug(self):
         return self.slug
+

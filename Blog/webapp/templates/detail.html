@@ -16,14 +16,14 @@
           </tr>
         </thead>
         <tbody>
-            {% for blog in blog_objs %}
+            {% for article in articlep_object %}
           <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{blog.title}}</td>
-            <td>{{blog.created_at}}</td>
+            <td>{{article.title}}</td>
+            <td>{{article.create_date}}</td>
             <td>
-                <a href="{%  url 'blog_update' blog.slug %}" class="btn btn-success">Update</a>
-                <a href="{% url 'blog_delete' blog.id %}" class="btn btn-danger">Delete</a>
+                <a href="{%  url 'article_update' article.slug %}" class="btn btn-success">Update</a>
+                <a href="{% url 'article_delete' article.id %}" class="btn btn-danger">Delete</a>
 
 
             </td>
