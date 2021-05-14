@@ -7,6 +7,12 @@ from django.contrib.auth.models import User
 from webapp.include import *
 
 
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_verified = models.BooleanField(default=False)
+    token = models.CharField(max_length=100)
+
+
 class Article(models.Model):
     title = models.CharField(max_length=200)
     content = FroalaField()
@@ -26,4 +32,3 @@ class Article(models.Model):
 
     def get_slug(self):
         return self.slug
-

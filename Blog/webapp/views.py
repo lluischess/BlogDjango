@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework.views import APIView
@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 from webapp.form import BlogForm
-from webapp.models import Article
+from webapp.models import Article, Profile
 
 
 def home(request):
@@ -58,10 +58,10 @@ def post_update(request, slug):
             return redirect('/')
 
         initial_dic = {'content': article_object.content}
-        form = Article(initial=initial_dic)
+        form = BlogForm(initial=initial_dic)
 
         if request.method == 'POST':
-            form = Article(request.POST)
+            form = BlogForm(request.POST)
             print(request.FILES)
             image = request.FILES['image']
             title = request.POST.get('title')
@@ -80,14 +80,20 @@ def post_update(request, slug):
 
     except Exception as Error:
         print(Error)
-    return render(request, 'post_update.html', context)
+    return render(request, 'post-update.html', context)
 
 
 def login(request):
     return render(request, 'login.html')
 
 
+def V_logout(request):
+    logout(request)
+    return redirect('/')
+
+
 def addpost(request):
+    global content
     context = {'form': BlogForm}
     try:
         if request.method == 'POST':
@@ -136,10 +142,14 @@ class LoginView(APIView):
                 response['message'] = 'Invalid username'
                 raise Exception('Invalid username')
 
+            # if not Profile.objects.filter(user=check_user).first().is_verified:
+            #     response['message'] = 'User not Verified'
+            #     raise Exception('User not Verified')
+
             user_obj = authenticate(username=data.get('username'), password=data.get('password'))
 
             if user_obj:
-                login(request, user_obj)
+                login(request)
                 response['status'] = 200
                 response['message'] = 'Welcome'
             else:
@@ -177,6 +187,9 @@ class RegisterView(APIView):
             user_obj = User.objects.create(username=data.get('username'))
             user_obj.set_password(data.get('password'))
             user_obj.save()
+
+            # Profile.objects.create(user=user_obj, token=generate_random_string(20))
+
             response['status'] = 200
             response['message'] = 'User created'
 

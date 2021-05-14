@@ -11,10 +11,10 @@ logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 # res = ''.join(random.choices(string.ascii_uppercase +
 #                                  string.digits, k=random_of_repeats))
 
-# def generate_random_string(random_of_repeats):
-#     res = ''.join(random.choices(string.digits, k=random_of_repeats))
-#     # logging.debug(res)
-#     return res
+def generate_random_string(random_of_repeats):
+    res = ''.join(random.choices(string.digits, k=random_of_repeats))
+    # logging.debug(res)
+    return res
 
 
 def generate_slug(title):
