@@ -43,6 +43,8 @@
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+                        <a href="{% url 'detail' %}" class="btn btn-warning">Post List</a></li>
+                    <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
                         <a class="btn btn-info" href="{% url 'addpost' %}">Add Post</a></li>
                     <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
                         <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a></li>

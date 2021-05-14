@@ -132,13 +132,9 @@ class LoginView(APIView):
                 response['message'] = 'Invalid username'
                 raise Exception('Invalid username')
 
-            # if not Profile.objects.filter(user=check_user).first().is_verified:
-            #     response['message'] = 'User not Verified'
-            #     raise Exception('User not Verified')
-
             user_obj = authenticate(username=data.get('username'), password=data.get('password'))
 
-            if user_obj:
+            if user_obj.is_active:
                 login(request)
                 response['status'] = 200
                 response['message'] = 'Welcome'
@@ -177,8 +173,6 @@ class RegisterView(APIView):
             user_obj = User.objects.create(username=data.get('username'))
             user_obj.set_password(data.get('password'))
             user_obj.save()
-
-            # Profile.objects.create(user=user_obj, token=generate_random_string(20))
 
             response['status'] = 200
             response['message'] = 'User created'
