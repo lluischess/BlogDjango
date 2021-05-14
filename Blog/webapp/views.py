@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
-from webapp.form import BlogForm
+from webapp.form import BlogForm, BlogForm2
 from webapp.models import Article, Profile
 
 
@@ -57,11 +57,12 @@ def post_update(request, id):
         if article_object.user != request.user:
             return redirect('/')
 
-        initial_dic = {'content': article_object.content}
-        form = BlogForm(initial=initial_dic)
+        initial_dic = {'content': article_object.content, 'title': article_object.title,
+                       'image': article_object.image}
+        form = BlogForm2(initial=initial_dic)
 
         if request.method == 'POST':
-            form = BlogForm(request.POST, instance=article_object)
+            form = BlogForm2(request.POST, instance=article_object)
 
             if form.is_valid():
                 form.save()
@@ -83,7 +84,6 @@ def V_logout(request):
 
 
 def addpost(request):
-    global content
     context = {'form': BlogForm}
     try:
         if request.method == 'POST':
