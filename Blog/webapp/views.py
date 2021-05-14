@@ -48,11 +48,11 @@ def article_delete(request, id):
     return redirect('/detail/')
 
 
-def post_update(request, slug):
+def post_update(request, id):
     context = {}
 
     try:
-        article_object = Article.objects.get(slug=slug)
+        article_object = Article.objects.get(id=id)
 
         if article_object.user != request.user:
             return redirect('/')
@@ -61,21 +61,11 @@ def post_update(request, slug):
         form = BlogForm(initial=initial_dic)
 
         if request.method == 'POST':
-            form = BlogForm(request.POST)
-            print(request.FILES)
-            image = request.FILES['image']
-            title = request.POST.get('title')
-            user = request.user
+            form = BlogForm(request.POST, instance=article_object)
 
             if form.is_valid():
-                content = form.cleaned_data['content']
+                form.save()
 
-            article_object = Article.objects.create(
-                user=user, title=title,
-                content=content, image=image
-            )
-
-        context['article_object'] = article_object
         context['form'] = form
 
     except Exception as Error:

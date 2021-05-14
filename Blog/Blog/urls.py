@@ -36,7 +36,7 @@ urlpatterns = [
     path('addpost/', addpost, name='addpost'),
     path('post-details/<slug>', article_detail, name='post-details'),
     path('detail/', articlep_detail, name='detail'),
-    path('post_update/<slug>', post_update, name='post_update'),
+    path('post_update/<id>', post_update, name='post_update'),
     path('article_delete/<id>', article_delete, name='article_delete'),
     path('V_logout', V_logout, name='logout'),
 ]
