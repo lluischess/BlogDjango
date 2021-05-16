@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework.views import APIView
@@ -74,7 +74,7 @@ def post_update(request, id):
     return render(request, 'post-update.html', context)
 
 
-def login(request):
+def login_view(request):
     return render(request, 'login.html')
 
 
@@ -115,35 +115,39 @@ def register(request):
 class LoginView(APIView):
 
     def post(self, request):
-        response = {'status': 500, 'message': 'Something is wrong'}
+        response = {}
+        response['status'] = 500
+        response['message'] = 'Something went wrong'
         try:
             data = request.data
 
             if data.get('username') is None:
-                response['message'] = 'Username not found'
-                raise Exception('Username not found')
+                response['message'] = 'key username not found'
+                raise Exception('key username not found')
+
             if data.get('password') is None:
-                response['message'] = 'Password not found'
-                raise Exception('Password not found')
+                response['message'] = 'key password not found'
+                raise Exception('key password not found')
 
             check_user = User.objects.filter(username=data.get('username')).first()
 
             if check_user is None:
-                response['message'] = 'Invalid username'
-                raise Exception('Invalid username')
+                response['message'] = 'invalid username , user not found'
+                raise Exception('invalid username not found')
 
             user_obj = authenticate(username=data.get('username'), password=data.get('password'))
-
-            if user_obj.is_active:
-                login(request)
+            if user_obj:
+                login(request, user_obj)
                 response['status'] = 200
                 response['message'] = 'Welcome'
             else:
-                response['message'] = 'Error authentication'
-                raise Exception('Error authentication')
+                response['message'] = 'invalid password'
+                raise Exception('invalid password')
 
-        except Exception as error:
-            print(error)
+
+        except Exception as e:
+            print(e)
+
         return Response(response)
 
 

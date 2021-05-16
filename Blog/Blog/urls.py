@@ -20,7 +20,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from froala_editor import views
 
-from webapp.views import home, login, register, addpost, article_detail, articlep_detail, post_update, article_delete, V_logout
+from webapp.views import home, login_view, register, addpost, article_detail, articlep_detail, post_update, article_delete, V_logout, RegisterView
 
 from webapp.views import LoginView
 
@@ -28,7 +28,7 @@ from webapp.views import LoginView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('login.html', login, name='login'),
+    path('login.html', login_view, name='login'),
     path('register.html', register, name='register'),
     path('froala_editor/', include('froala_editor.urls')),
     path('api-auth/', include('rest_framework.urls')),
@@ -39,6 +39,7 @@ urlpatterns = [
     path('post_update/<id>', post_update, name='post_update'),
     path('article_delete/<id>', article_delete, name='article_delete'),
     path('V_logout', V_logout, name='logout'),
+    path('register/' , RegisterView , name="register_view"),
 ]
 
 # hace que se puedan visualizar los enlaces a las imagenes
